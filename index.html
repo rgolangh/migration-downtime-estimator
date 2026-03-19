@@ -188,6 +188,15 @@
                 <input type="number" id="time" value="3600"> sec
             </div>
         </div>
+
+        <div class="input-group">
+            <label>Virt-v2v Conversion Time</label>
+            <span class="desc">Fixed time for virt-v2v guest OS conversion (minutes).</span>
+            <div class="range-wrapper">
+                <input type="range" id="v2vTimeRange" min="0" max="30" step="1" value="5">
+                <input type="number" id="v2vTime" value="5" step="1"> min
+            </div>
+        </div>
     </div>
 
     <div class="results-panel">
@@ -226,7 +235,7 @@
 
 <script>
     // Link inputs and ranges to keep them in sync
-    const inputs = ['diskSize', 'offloadSpeed', 'vddkSpeed', 'changeRate', 'time'];
+    const inputs = ['diskSize', 'offloadSpeed', 'vddkSpeed', 'changeRate', 'time', 'v2vTime'];
     
     inputs.forEach(id => {
         const numInput = document.getElementById(id);
@@ -261,10 +270,13 @@
         const Wa = parseFloat(document.getElementById('changeRate').value) || 0;
         const t = parseFloat(document.getElementById('time').value) || 0;
 
+        const v2vMinutes = parseFloat(document.getElementById('v2vTime').value) || 0;
+        const v2vSeconds = v2vMinutes * 60;
+
         // Math
-        const coldDowntime = D / Wx;
+        const coldDowntime = (D / Wx) + v2vSeconds;
         const deltaSize = Wa * t;
-        const warmDowntime = deltaSize / Wv;
+        const warmDowntime = (deltaSize / Wv) + v2vSeconds;
 
         // Update Labels
         document.getElementById('coldTimeLabel').innerText = formatTime(coldDowntime);
