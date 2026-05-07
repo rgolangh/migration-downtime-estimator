@@ -1,8 +1,11 @@
 
-# Migration estimator
+# Migration Downtime Estimator
 
-I started this estimator because I wanted to formulate a rule to help decide when offload
-cold migration is faster then offloaded warm migration. Here is the formula:
+A small calculator to formulate a rule to help decide when offload
+cold migration is faster then offloaded warm migration or rather which methods
+results a smaller downtime.
+
+The formula:
 
 Wx (xcopy wtite speed) = 1G/s
 Wv (vddk write speed) = 0.125 G/s
@@ -22,15 +25,17 @@ D/Wx < (Wa * t^)/Wv
 Wa > Wv * D / Wx * t^
 
 
-The question to ask here is what should be the      application change rate,
+The question to ask here is what should be the application change rate,
 given the current speeds.
 Here is an example:
 
+# Run locally:
+Open the local index.html
 
-Here 
-oc new-project migration-estimator
-oc new-build --binary --name=migration-estimator --strategy=docker
-oc start-build migration-estimator --from-dir=. --follow
-oc new-app migration-estimator
-oc create route edge migration-estimator --service=migration-estimator --port=8080-tcp
+# Deploy to OpenShift from git:
+oc new-project migration-downtime-estimator
+oc new-build --binary --name=migration-downtime-estimator --strategy=docker
+oc start-build migration-downtime-estimator --from-dir=. --follow
+oc new-app migration-downtime-estimator
+oc create route edge migration-downtime-estimator --service=migration-estimator --port=8080-tcp
  
