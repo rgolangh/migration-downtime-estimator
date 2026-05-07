@@ -1,6 +1,8 @@
 
 # Migration Downtime Estimator
 
+https://rgolangh.github.io/migration-downtime-estimator/
+
 A small calculator to formulate a rule to help decide when offload
 cold migration is faster then offloaded warm migration or rather which methods
 results a smaller downtime.
